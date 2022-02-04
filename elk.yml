@@ -45,7 +45,7 @@
     - ansible.builtin.include_role:
           name: xpack
 
-    - ansible.builtin.include_role:
+    - ansible.builtin.import_role:
         name: redhat_cop.controller_configuration.settings
       delegate_to: localhost
       vars:
