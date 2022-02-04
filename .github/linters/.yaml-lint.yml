@@ -8,6 +8,7 @@
 ###########################################
 ignore: |
   .github/
+  roles/ssl/
 
 rules:
   braces:

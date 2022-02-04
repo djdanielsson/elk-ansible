@@ -39,9 +39,51 @@
   #  - ansible.builtin.include_role:
   #       name: filebeat
 
-  #  - ansible.builtin.include_role:
-  #       name: ssl
+    - ansible.builtin.include_role:
+          name: ssl
 
-  #  - ansible.builtin.include_role:
-  #       name: xpack
+    - ansible.builtin.include_role:
+          name: xpack
+
+    - ansible.builtin.include_role:
+        name: redhat_cop.controller_configuration.settings
+      delegate_to: localhost
+      vars:
+        controller_hostname: "{{ controller_host | default(lookup('env','TOWER_HOSTNAME')) }}"
+        controller_username: "{{ controller_user | default(lookup('env','TOWER_USERNAME')) }}"
+        controller_password: "{{ controller_pass | default(lookup('env','TOWER_PASSWORD')) }}"
+        controller_validate_certs: "{{ controller_ssl_validate | default('False') }}"
+        controller_settings:
+          - name: LOG_AGGREGATOR_HOST
+            value: "http://{{ groups['elasticsearch'][0] }}"
+          - name: LOG_AGGREGATOR_PORT
+            value: 5055
+          - name: LOG_AGGREGATOR_TYPE
+            value: "logstash"
+          - name: LOG_AGGREGATOR_USERNAME
+            value: ""
+          - name: LOG_AGGREGATOR_PASSWORD
+            value: ""
+          - name: LOG_AGGREGATOR_LOGGERS
+            value: ["awx", "activity_stream", "job_events", "system_tracking"]
+          - name: LOG_AGGREGATOR_INDIVIDUAL_FACTS
+            value: false
+          - name: LOG_AGGREGATOR_ENABLED
+            value: true
+          - name: LOG_AGGREGATOR_TOWER_UUID
+            value: ""
+          - name: LOG_AGGREGATOR_PROTOCOL
+            value: "https"
+          - name: LOG_AGGREGATOR_TCP_TIMEOUT
+            value: 5
+          - name: LOG_AGGREGATOR_VERIFY_CERT
+            value: false
+          - name: LOG_AGGREGATOR_LEVEL
+            value: "INFO"
+          - name: LOG_AGGREGATOR_MAX_DISK_USAGE_GB
+            value: 1
+          - name: LOG_AGGREGATOR_MAX_DISK_USAGE_PATH
+            value: "/var/lib/awx"
+          - name: LOG_AGGREGATOR_RSYSLOGD_DEBUG
+            value: false
 ...
