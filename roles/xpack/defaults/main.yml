@@ -1,3 +1,4 @@
 ---
 # defaults file for xpack
+xpack_package: x-pack
 ...

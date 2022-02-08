@@ -1,6 +1,6 @@
 ---
 - name: Install Elasticsearch X-Pack
-  ansible.builtin.command: "/usr/share/elasticsearch/bin/elasticsearch-plugin install file:///tmp/{{ xpack_package }} --batch"
+  ansible.builtin.command: "/usr/share/elasticsearch/bin/elasticsearch-plugin install x-pack --batch"
 
 - name: Restart Elasticsearch
   ansible.builtin.service:
@@ -53,10 +53,10 @@
     delay: 30
 
 - name: Install Logstash xpack
-  ansible.builtin.command: "/usr/share/logstash/bin/logstash-plugin install file:///tmp/{{ xpack_package }}"
+  ansible.builtin.command: "/usr/share/logstash/bin/logstash-plugin install x-pack"
 
 - name: Install Kibana xpack
-  ansible.builtin.command: "/usr/share/kibana/bin/kibana-plugin install file:///tmp/{{ xpack_package }}"
+  ansible.builtin.command: "/usr/share/kibana/bin/kibana-plugin install x-pack"
 
 - name: Set Kibana user/pass
   ansible.builtin.lineinfile:
